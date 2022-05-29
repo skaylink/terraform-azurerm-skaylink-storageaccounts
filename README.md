@@ -1,19 +1,29 @@
-# Skaylink Terraform module template
+# Skaylink Terraform module; Storage Accounts
 
-This template repository is used as the baseline for Skaylink Terraform modules, please use this as your starting point when building new (public) modules.
+This module allows you to bulk create storage accounts by supplying a storage account name, container name, resource group and tags.  The SA and container will be created in the same region as the supplied resource group.
 
-Currently this repository is set to be private, but any repos you want to deploy as a module need to be public.
+## Example
+This example shows you how to define the accounts in your variables. You can create as many, or few storage accounts as you want to.
 
-## Process
-
-To create a new module, simply create a new repository from this template, build on it, and deploy it to the Terraform registry.
-
-It is important to note that the template is a private repo, but the finished module has to be public. Do not remove the license file or the intro on the files. If you need to add more files, always add the license text first.
-
-## Checks
-
-We automatically run checks using GitHub workflows which ensures formatting, validation and vulnerebility checks are run.
-
-## Support
-
-If you need any support or guidance, don't hesitate to reach out to the Cloud Care team.
+```hcl
+storage_accounts = {
+  "account1" = {
+    storage_account_name     = "storageaccount1"
+    container_name           = "container1"
+    resource_group_name      = "rg-1"
+    environment_name         = "dev"
+  },
+  "account2" = {
+    storage_account_name     = "storageaccount2"
+    container_name           = "container2"
+    resource_group_name      = "rg-2"
+    environment_name         = "staging"
+  },
+  "account3" = {
+    storage_account_name     = "storageaccount3"
+    container_name           = "container3"
+    resource_group_name      = "rg-3"
+    environment_name         = "prod"
+  },
+}
+```

@@ -15,3 +15,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # For questions and contributions please contact info@iq3cloud.com
+
+data "azurerm_resource_group" "rg" {
+  for_each = var.storage_accounts
+  name     = each.value.resource_group_name
+}

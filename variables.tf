@@ -16,38 +16,13 @@
 
 # For questions and contributions please contact info@iq3cloud.com
 
-variable "name" {
-  type        = string
-  description = "The name of the resource group you are deploying"
-}
-
-variable "location" {
-  type        = string
-  description = "The location of the resource group, defaults to west Europe"
-  default     = "westeurope"
-}
-
-variable "customTag1" {
-  type        = string
-  description = "the first customTag"
-}
-
-variable "customTag2" {
-  type        = string
-  description = "the second customTag"
-}
-
-variable "customTag3" {
-  type        = string
-  description = "the third customTag"
-}
-
-variable "customTag4" {
-  type        = string
-  description = "the fourth customTag"
-}
-
-variable "customTag5" {
-  type        = string
-  description = "the fifth customTag"
+variable "storage_accounts" {
+  type = map(object({
+    storage_account_name = string
+    container_name       = string
+    resource_group_name  = string
+    environment_name     = string
+    }
+  ))
+  description = "Supply storage account name, container name, resource group name and environment name. See README for more information on usage."
 }

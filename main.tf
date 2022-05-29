@@ -15,14 +15,28 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # For questions and contributions please contact info@iq3cloud.com
-resource "azurerm_resource_group" "resourcegroup" {
-  name     = var.name
-  location = var.location
+
+resource "azurerm_storage_account" "sa" {
+  for_each = var.storage_accounts
+
+  name                     = each.value.storage_account_name
+  location                 = data.azurerm_resource_group.rg[each.key].location
+  resource_group_name      = data.azurerm_resource_group.rg[each.key].name
+  account_tier             = "Standard"
+  account_replication_type = "ZRS"
+
   tags = {
-    customTag1 = var.customTag1
-    customTag2 = var.customTag2
-    customTag3 = var.customTag3
-    customTag4 = var.customTag4
-    customTag5 = var.customTag5
+    environment = each.value.environment_name
   }
+}
+
+resource "azurerm_storage_container" "container" {
+  for_each              = var.storage_accounts
+  storage_account_name  = each.value.storage_account_name
+  container_access_type = "blob"
+  name                  = each.value.container_name
+
+  depends_on = [
+    azurerm_storage_account.sa,
+  ]
 }
