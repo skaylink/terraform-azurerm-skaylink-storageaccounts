@@ -19,11 +19,12 @@
 resource "azurerm_storage_account" "sa" {
   for_each = var.storage_accounts
 
-  name                     = each.value.storage_account_name
-  location                 = data.azurerm_resource_group.rg[each.key].location
-  resource_group_name      = data.azurerm_resource_group.rg[each.key].name
-  account_tier             = "Standard"
-  account_replication_type = "ZRS"
+  name                            = each.value.storage_account_name
+  location                        = data.azurerm_resource_group.rg[each.key].location
+  resource_group_name             = data.azurerm_resource_group.rg[each.key].name
+  account_tier                    = "Standard"
+  account_replication_type        = "ZRS"
+  allow_nested_items_to_be_public = false
 
   tags = {
     environment = each.value.environment_name
